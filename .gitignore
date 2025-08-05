@@ -137,3 +137,34 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# IDEA
+.idea
+
+
+# HEXO
+.DS_Store
+Thumbs.db
+db.json
+.deploy*/
+_multiconfig.yml
+
+
+# build output
+dist/
+
+# generated types
+.astro/
+
+# logs
+pnpm-debug.log*
+
+# environment variables
+.env.production
+
+.vercel
+
+package-lock.json
+bun.lockb
+yarn.lock
