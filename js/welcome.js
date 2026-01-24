@@ -1,12 +1,23 @@
 // 首次访问弹窗
-const i18nData = (window.GLOBAL_CONFIG && GLOBAL_CONFIG.i18n) || {};
-const getI18n = key => i18nData[key] || '';
+const defaultI18n = {
+    welcome: 'Welcome',
+    welcome_from: 'Welcome from ${referrer}',
+    about_browser: 'This site uses cookies. See license.',
+    about_license: 'License',
+    lower_browser: 'Your browser is outdated.',
+    close: 'Close',
+    devtools_warning: 'DevTools is open.'
+};
+const i18nData = (window.GLOBAL_CONFIG && GLOBAL_CONFIG.i18n) || defaultI18n;
+const getI18n = key => i18nData[key] || defaultI18n[key] || '';
 const formatI18n = (template, vars) => {
     if (!template) return '';
     return template.replace(/\$\{(\w+)\}/g, (_, name) => (vars[name] ?? ''));
 };
 
-if (localStorage.getItem("popWelcomeWindow") != "0") {
+const enableWelcomeSnackbar = false;
+
+if (enableWelcomeSnackbar && localStorage.getItem("popWelcomeWindow") != "0") {
     if(document.referrer==undefined||document.referrer.indexOf("blog.greglee.cn")!=-1||document.referrer.indexOf("greglee.cn")!=-1||document.referrer.indexOf("localhost:4000")!=-1){ //改成自己域名，注意是referrer!!! qwq
         Snackbar.show({
             pos: "top-right",

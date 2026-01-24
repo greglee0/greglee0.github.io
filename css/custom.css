@@ -1,12 +1,3 @@
-#nav .menus_items{
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-}
-
 #article-container h1::before,
 #article-container h2::before,
 #article-container h3::before,
@@ -372,11 +363,28 @@ body.bing-splash--open {
   background: var(--global-bg) !important;
 }
 
+#footer {
+  background: var(--global-bg) !important;
+  color: var(--font-color);
+}
+
+#footer > * {
+  color: var(--font-color);
+}
+
+#footer a {
+  color: inherit;
+}
+
+#footer a:hover {
+  color: var(--text-highlight-color);
+}
+
 #footer .wordcount {
   text-align: center;
   font-size: 1rem;
   padding: 1.5rem 0 0;
-  color: var(--font-color);
+  color: inherit;
 }
 
 #footer .wordcount span {
@@ -385,7 +393,7 @@ body.bing-splash--open {
 
 #footer .footer-copyright,
 #footer .footer-copyright a {
-  color: var(--font-color);
+  color: inherit;
 }
 
 #article-container .flink-list-item a {
@@ -443,3 +451,27 @@ body.bing-splash--open {
   }
 }
 
+/* Center top nav menu */
+#nav .menus_items {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+#nav.hide-menu .menus_items {
+  display: none;
+}
+
+/* Hide search text in nav */
+#search-button .site-page.search > span {
+  display: none;
+}
+
+/* Remove nav underline */
+#nav .site-page:not(.child)::after {
+  display: none;
+}
