@@ -2,7 +2,7 @@
 const defaultI18n = {
     welcome: 'Welcome',
     welcome_from: 'Welcome from ${referrer}',
-    about_browser: 'This site uses cookies. See license.',
+    about_browser: 'This site uses cookies. See index.md.',
     about_license: 'License',
     lower_browser: 'Your browser is outdated.',
     close: 'Close',
@@ -41,7 +41,7 @@ if (sessionStorage.getItem("popCookieWindow") != "0") {
             pos: 'top-center',
             actionText: getI18n('about_license'),
             onActionClick: function (element) {
-                window.open("/license")
+                window.open("/license/")
             },
         })
     }, 3000)
