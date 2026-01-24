@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">浏览器升级提示 | Browser Upgrade Required</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mdc-primary: #2196f2;
+            --mdc-primary-light: #6ec6ff;
+            --mdc-primary-dark: #0069c0;
+            --mdc-secondary: #ff5722;
+            --mdc-surface: #ffffff;
+            --mdc-error: #f44336;
+            --mdc-on-primary: #ffffff;
+            --mdc-on-secondary: #ffffff;
+            --mdc-on-surface: #212121;
+            --mdc-on-error: #ffffff;
+            --mdc-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+            --mdc-shadow-hover: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .mdc-card {
+            background-color: var(--mdc-surface);
+            border-radius: 16px;
+            box-shadow: var(--mdc-shadow);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card-header {
+            background-color: var(--mdc-primary);
+            color: var(--mdc-on-primary);
+            padding: 28px;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--mdc-primary);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .card-header::before {
+            content: '';
+            font-family: 'Material Icons';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: white;
+            z-index: 2;
+        }
+
+        .card-header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .card-header p {
+            font-size: 18px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 40px 32px 32px;
+        }
+
+        .warning-section {
+            background-color: #fff8e1;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 36px;
+            display: flex;
+            align-items: center;
+            border-left: 6px solid #ffa000;
+        }
+
+        .warning-icon {
+            color: #ffa000;
+            margin-right: 20px;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            flex: 1;
+            line-height: 1.7;
+        }
+
+        .warning-text p {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .browser-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .browser-section h2 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--mdc-primary);
+        }
+
+        .browser-section p {
+            color: #666;
+            margin-bottom: 28px;
+        }
+
+        .browser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .browser-card {
+            background-color: #f8f9fa;
+            border-radius: 16px;
+            padding: 24px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+        }
+
+        .browser-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--mdc-shadow-hover);
+            border-color: var(--mdc-primary-light);
+        }
+
+        .browser-icon {
+            font-size: 52px;
+            margin-bottom: 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chrome-icon { color: #4285F4; }
+        .firefox-icon { color: #FF7139; }
+        .edge-icon { color: #0078D7; }
+        .opera-icon { color: #FF1B2D; }
+
+        .browser-name {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--mdc-on-surface);
+            font-size: 18px;
+        }
+
+        .browser-vendor {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .card-actions {
+            padding: 16px 32px 32px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .warning-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .mdc-button {
+            background-color: var(--mdc-primary);
+            color: var(--mdc-on-primary);
+            border: none;
+            border-radius: 28px;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .mdc-button .material-icons {
+            margin-right: 10px;
+        }
+
+        .mdc-button:hover {
+            background-color: var(--mdc-primary-dark);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .browser-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .card-header h1 {
+                font-size: 24px;
+            }
+
+            .card-content {
+                padding: 32px 20px 24px;
+            }
+
+            .warning-section {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .warning-icon {
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .browser-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                padding: 20px;
+            }
+
+            .card-header h1 {
+                font-size: 22px;
+            }
+
+            .mdc-button {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* 确保所有链接没有下划线 */
+        a {
+            text-decoration: none;
+        }
+
+        /* 链接悬停效果 */
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="mdc-card">
+    <div class="card-header">
+        <div class="language-switcher">
+            <button class="language-btn" data-lang="zh">中文</button>
+            <button class="language-btn" data-lang="en">English</button>
+        </div>
+        <h1 id="title-text" data-zh="浏览器升级提示" data-en="Browser Upgrade Required">浏览器升级提示</h1>
+    </div>
+
+    <div class="card-content">
+        <div class="warning-section">
+            <i class="material-icons warning-icon">warning</i>
+            <div class="warning-text">
+                <p id="warning-text" data-zh="很抱歉IE已经停止支持，因此本博客不再支持IE浏览器，如果想要正常浏览，请换用新版Edge或Chrome、Firefox、Opera等现代浏览器" data-en="We regret to inform you that Internet Explorer is no longer supported. This blog has discontinued support for IE browsers. To ensure optimal browsing experience, please upgrade to a modern browser such as the latest version of Edge, Chrome, Firefox, or Opera.">很抱歉IE已经停止支持，因此本博客不再支持IE浏览器，如果想要正常浏览，请换用新版Edge或Chrome、Firefox、Opera等现代浏览器</p>
+            </div>
+        </div>
+
+        <div class="browser-section">
+            <h2 id="browser-title" data-zh="以下四款官方正版浏览器任君挑选" data-en="Choose from these four official browsers">以下四款官方正版浏览器任君挑选</h2>
+            <div class="browser-grid">
+                <a href="https://www.google.cn/intl/zh-CN/chrome" target="_blank" class="browser-card">
+                    <div class="browser-icon">
+                        <i class="material-icons chrome-icon">language</i>
+                    </div>
+                    <div class="browser-name">Chrome</div>
+                    <div class="browser-vendor" data-zh="谷歌" data-en="Google">谷歌</div>
+                </a>
+
+                <a href="https://www.mozilla.org/zh-CN/firefox/new" target="_blank" class="browser-card">
+                    <div class="browser-icon">
+                        <i class="material-icons firefox-icon">public</i>
+                    </div>
+                    <div class="browser-name">Firefox</div>
+                    <div class="browser-vendor" data-zh="火狐" data-en="Mozilla">火狐</div>
+                </a>
+
+                <a href="https://www.microsoft.com/edge" target="_blank" class="browser-card">
+                    <div class="browser-icon">
+                        <i class="material-icons edge-icon">explore</i>
+                    </div>
+                    <div class="browser-name" data-zh="Edge（新版）" data-en="Edge (Latest)">Edge（新版）</div>
+                    <div class="browser-vendor" data-zh="微软" data-en="Microsoft">微软</div>
+                </a>
+
+                <a href="https://www.opera.com/zh-cn" target="_blank" class="browser-card">
+                    <div class="browser-icon">
+                        <i class="material-icons opera-icon">web_asset</i>
+                    </div>
+                    <div class="browser-name">Opera</div>
+                    <div class="browser-vendor" data-zh="欧朋" data-en="Opera Software">欧朋</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 添加浏览器卡片的点击效果
+    document.querySelectorAll('.browser-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // 添加点击效果
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
+    });
+
+    // 语言切换功能
+    let currentLang = 'zh';
+    
+    function switchLanguage(lang) {
+        currentLang = lang;
+        
+        // 更新页面标题
+        document.getElementById('page-title').textContent = 
+            lang === 'zh' ? '浏览器升级提示 | Browser Upgrade Required' : 'Browser Upgrade Required | 浏览器升级提示';
+        
+        // 更新所有带数据属性的元素
+        document.querySelectorAll('[data-zh], [data-en]').forEach(element => {
+            const text = element.getAttribute(`data-${lang}`);
+            if (text) {
+                element.textContent = text;
+            }
+        });
+        
+        // 更新语言按钮样式
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) {
+                btn.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.7)';
+            } else {
+                btn.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }
+        });
+        
+        // 更新HTML lang属性
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        
+        // 保存语言偏好
+        localStorage.setItem('preferredLanguage', lang);
+    }
+
+    // 初始化语言
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedLang = localStorage.getItem('preferredLanguage') || 'zh';
+        switchLanguage(savedLang);
+        
+        // 添加语言切换事件监听
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchLanguage(this.dataset.lang);
+            });
+        });
+    });
+
+</script>
+</body>
+</html>
