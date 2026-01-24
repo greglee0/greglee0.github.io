@@ -83,6 +83,48 @@
     padding-left: 28px;
 }
 
+.read-mode #article-container h1 {
+    padding-left: 28px;
+}
+
+.read-mode #article-container h2 {
+    padding-left: 26px;
+}
+
+.read-mode #article-container h3 {
+    padding-left: 24px;
+}
+
+.read-mode #article-container h4 {
+    padding-left: 22px;
+}
+
+.read-mode #article-container h5,
+.read-mode #article-container h6 {
+    padding-left: 20px;
+}
+
+.read-mode #article-container h1:hover {
+    padding-left: 32px;
+}
+
+.read-mode #article-container h2:hover {
+    padding-left: 30px;
+}
+
+.read-mode #article-container h3:hover {
+    padding-left: 28px;
+}
+
+.read-mode #article-container h4:hover {
+    padding-left: 26px;
+}
+
+.read-mode #article-container h5:hover,
+.read-mode #article-container h6:hover {
+    padding-left: 24px;
+}
+
 @keyframes heading-windmill-rotate {
     0% {
         transform: translateY(-50%) rotate(0deg);
@@ -271,6 +313,18 @@ body.bing-splash--open {
     border-bottom: 1px solid var(--light-grey);
 }
 
+#post .post-copyright {
+    border: 1px solid var(--hr-border);
+}
+
+.custom-hr {
+    border: 2px dashed var(--hr-border);
+}
+
+.custom-hr:before {
+    color: var(--hr-before-color);
+}
+
 #page-header .bing-wallpaper {
   position: absolute;
   right: 0.75rem;
@@ -352,11 +406,24 @@ body.bing-splash--open {
 :root {
   --global-bg: linear-gradient(90deg, #ffd7e4 0%, #c8f1ff 100%);
   --card-bg: #ffffff55;
+  --hr-border: #9ca3af;
+  --hr-before-color: #6b7280;
+  --inline-code-bg: #e2e8f0;
+  --inline-code-color: #1f2937;
 }
 
 [data-theme='dark'] {
   --global-bg: linear-gradient(90deg, #2c0c16 0%, #043749 100%);
   --card-bg: #ffffff11;
+  --hr-border: rgba(255, 255, 255, 0.4);
+  --hr-before-color: rgba(255, 255, 255, 0.7);
+  --inline-code-bg: #1f2937;
+  --inline-code-color: #e5e7eb;
+}
+
+#article-container :not(pre) > code {
+  background: var(--inline-code-bg);
+  color: var(--inline-code-color);
 }
 
 #page-header.post-bg {
